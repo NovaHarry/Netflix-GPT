@@ -1,5 +1,5 @@
 export const validateData = (email, password) => {
-  if (email.length === 0 || password.length == 0)
+  if (email.length === 0 || password.length === 0)
     return "Fields should not be empty";
   const validateEmailId =
     /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(email);
