@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { validateData } from "../utils/validate";
 
 const Login = () => {
   const [signIn, setSignIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleSubmit = () => {
+    const message = validateData(email.current.value, password.current.value);
+
+    setErrorMessage(message);
+  };
   return (
     <div>
       <Header />
@@ -16,25 +27,32 @@ const Login = () => {
             <h1 className="font-semibold text-3xl m-3">
               {signIn ? "Sign In" : "Sign Up"}
             </h1>
-            <form className="">
+            <form onSubmit={(e) => e.preventDefault()}>
               {!signIn && (
                 <input
-                  className="p-3 my-3 w-full bg-zinc-800 rounded-md"
+                  className="p-3 my-3 w-full bg-zinc-800 rounded-md focus:outline-none"
                   type="text"
                   placeholder="Full Name"
                 />
               )}
               <input
-                className="p-3 my-3 w-full bg-zinc-800 rounded-md"
+                className="p-3 my-3 w-full bg-zinc-800 rounded-md focus:outline-none"
                 type="text"
                 placeholder="Email Address"
+                ref={email}
               />
               <input
-                className="p-3 my-3 w-full bg-zinc-800 rounded-md"
+                className="p-3 my-3 w-full bg-zinc-800 rounded-md focus:outline-none"
                 type="password"
                 placeholder="Password"
+                ref={password}
               />
-              <button className="p-3 my-3 w-full bg-[#e50914] font-semibold rounded-md">
+
+              <p className="py-4 font-semibold text-red-600">{errorMessage}</p>
+              <button
+                className="p-3 my-3 w-full bg-[#e50914] font-semibold rounded-md"
+                onClick={() => handleSubmit()}
+              >
                 {signIn ? "Sign In" : "Sign Up"}
               </button>
             </form>
